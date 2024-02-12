@@ -1,4 +1,23 @@
-#!/usr/bin/python
+#!/usr/bin/python3
+
+# Copyright 2024 Hewlett Packard Enterprise Development LP
+#
+# This program is free software; you can redistribute it and/or modify it 
+# under the terms of version 2 of the GNU General Public License as published 
+# by the Free Software Foundation.
+#
+# This program is distributed in the hope that it will be useful, but 
+# WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY 
+# or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for 
+# more details.
+#
+# You should have received a copy of the GNU General Public License along with 
+# this program; if not, write to:
+#
+#  Free Software Foundation, Inc.
+#  51 Franklin Street, Fifth Floor
+#  Boston, MA 02110-1301, USA.
+
 
 import json
 import sys
@@ -25,7 +44,7 @@ def search(searchstring, json_index):
            output_list.append(  (json_index[fw]["date"], fw, json_index[fw]["description"], json_index[fw]["target"], json_index[fw]["deviceclass"] ) )
        elif searchstring.lower() in json_index[fw]["description"].lower():
            output_list.append(  (json_index[fw]["date"], fw, json_index[fw]["description"], json_index[fw]["target"], json_index[fw]["deviceclass"] ) )
-       elif searchstring.lower() in json_index[fw]["target"].lower():
+       elif searchstring.lower() in json_index[fw]["target"]:
            output_list.append(  (json_index[fw]["date"], fw, json_index[fw]["description"], json_index[fw]["target"], json_index[fw]["deviceclass"] ) )
        elif searchstring.lower() in json_index[fw]["deviceclass"].lower():
            output_list.append(  (json_index[fw]["date"], fw, json_index[fw]["description"], json_index[fw]["target"], json_index[fw]["deviceclass"] ) )
@@ -110,34 +129,17 @@ def parse_config():
          print("Unable to open/parse " + config_file)
          quit(1)
    else: 
-         print("A valid warranty or support contract is required to acquire HPE firmware.")
-         print("If you have a contract associated with your HPE Passport ID, please generate")
-         print("an access token at http://downloads.linux.hpe.com/SDR/project/fwpp/")
-         print("and enter it here.")
-         if sys.version_info[0] < 3:
-            token = raw_input("access token: ")
-         else:
-            token =     input("access token: ")
-         html_request = requests.get("http://" + token.rstrip() + ":null@downloads.linux.hpe.com/SDR/repo/fwpp/") 
-         if html_request.status_code != 200:
-            print("Unable to validate token.  Is warranty or support associated the Passport ID")
-            print("used too generate this token?  Please refer to ")
-            print("   https://downloads.linux.hpe.com/SDR/project/fwpp/ ")
-            print("for additional information and support.")
-            quit(1)
-         else:
-            with open(config_file, "w+") as config_file_handle:
-               config_file_handle.write('{ \n')
-               config_file_handle.write('"_comment": "Generate token at: http://downloads.linux.hpe.com/SDR/project/fwpp/",  \n')
-               config_file_handle.write('"_comment": "Replace fwpp-gen10 with fwpp-gen9/fwpp-gen8/fwpp-G7 as appropriate.",  \n\n')
-               config_file_handle.write('   "token": "' + token + '",  \n')
-               config_file_handle.write('   "url"  : "http://downloads.linux.hpe.com/SDR/repo/fwpp-gen10/current"  \n\n')
-               config_file_handle.write('} \n')
-               config_file_handle.close()
-               print("Token accepted.")
-               print("Using default fwpp-gen10 firmware repository.  Please edit ~/.fwget.conf to change if needed.")
-               print("Writing ~/.fwget.conf\n")
-               url = "http://downloads.linux.hpe.com/SDR/repo/fwpp-gen10/current"
+         with open(config_file, "w+") as config_file_handle:
+            config_file_handle.write('{ \n')
+            config_file_handle.write('"_comment": "For Gen9 and earlier, generate token at: http://downloads.linux.hpe.com/SDR/project/fwpp/fwget.html",  \n')
+            config_file_handle.write('"_comment": "Replace fwpp-gen11 with fwpp-gen10/fwpp-gen9/fwpp-gen8 as appropriate.",  \n\n')
+            config_file_handle.write('   "token": "na",  \n')
+            config_file_handle.write('   "url"  : "https://downloads.linux.hpe.com/SDR/repo/fwpp-gen11/current"  \n\n')
+            config_file_handle.write('} \n')
+            config_file_handle.close()
+            print("Using default fwpp-gen11 firmware repository.  Please edit ~/.fwget.conf to change if needed.")
+            url = "https://downloads.linux.hpe.com/SDR/repo/fwpp-gen11/current"
+            token = "null"
   
    return(token, url)
 
@@ -150,10 +152,11 @@ if __name__ == "__main__":
 
   token, url = parse_config()
 
-  baseurl = url.replace('http://', '')  
+  baseurl = url.replace('https://', '')  
+  baseurl = baseurl.replace('http://', '')  
 
-  index_url   = "http://" + token + ":null@" + baseurl + "/fwrepodata/fwrepo.json"
-  content_url = "http://" + token + ":null@" + baseurl 
+  index_url   = "https://" + token + ":null@" + baseurl + "/fwrepodata/fwrepo.json"
+  content_url = "https://" + token + ":null@" + baseurl 
 
   try:
       index = requests.get(index_url)
@@ -174,8 +177,8 @@ if __name__ == "__main__":
          print("Token:  " + token)
          print("")
          print("A valid warranty or support contract is required to access HPE firmware.")
-         print("Please visit http://downloads.linux.hpe.com/SDR/project/fwpp/ to ")
-         print("generate an access token then add it to ~/fwget.conf.")
+         print("Please visit http://downloads.linux.hpe.com/SDR/project/fwpp-postprod to ")
+         print("generate an access token then add it to ~/.fwget.conf.")
          quit(1)
       else:
          print("Unable to download")
