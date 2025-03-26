@@ -103,9 +103,13 @@ The example below is configured for Gen 11 server firmware repository.
 * Debian, Ubuntu [fwget-1.0.4-1_all.deb](https://downloads.linux.hpe.com/SDR/project/fwpp/fwget-1.0.4-1_all.deb)	   
 
 # License
-fwget is open source software licensed under the GPLv2. We're interested in your feedback and pull requests. Check the HPE fwget github repository to contribute or clone the latest development branch.
+    fwget is open source software licensed under the GPLv2. We're interested in your feedback and pull requests.
+    Check the HPE fwget github repository to contribute or clone the latest development branch.
 
 # Changelog
-2025-03-10 (fwget-1.0.4): Add new feature - Automatically download the JSON file alongside the fwpkg package starting from Gen12 SPP.
-2025-03-03 (fwget-1.0.3): Add fwlist support to discover and export the local server firmware information.
-2024-02-12 (fwget-1.0.2): Update json index to include multiple targets per firmware.
+
+    2025-03-10 (fwget-1.0.4): Add new feature - Automatically download the JSON file alongside the fwpkg package starting from Gen12 SPP.
+    
+    2025-03-03 (fwget-1.0.3): Add fwlist support to discover and export the local server firmware information.
+    
+    2024-02-12 (fwget-1.0.2): Update json index to include multiple targets per firmware.
