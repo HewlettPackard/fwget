@@ -17,25 +17,20 @@ NOTE:
 
 
 The example below is configured for Gen 11 server firmware repository.
-
-    {
-       "ilo_address": "10.22.26.201",
-    
-       "ilo_username": "account_example",
-    
-       "ilo_password": "Password_example",
-    
-        "token": "",
-    
-        "sdr_url" : "https://downloads.linux.hpe.com/SDR/repo/fwpp-gen11/current"
-    }
-
+{
+   "ilo_address": "10.22.26.201",
+   "ilo_username": "account_example",
+   "ilo_password": "Password_example",
+   "ilo_proxy": "no",
+    "token": "na",
+    "sdr_url" : "https://downloads.linux.hpe.com/SDR/repo/fwpp-gen11/current"
+}
 
 # Usage
 
-* $ fwget  < search | locate | download | list >   [ search term ]
+* $ fwget < search | locate | download | list > [ search term ]
 
-* $ fwlist < spaced_display |  json_display >   
+* $ fwlist < spaced_display | json_display >
 
 ## Examples
 
@@ -97,19 +92,11 @@ The example below is configured for Gen 11 server firmware repository.
                   '00000000-0000-0000-0001-000000020243']}]
 
 # Download
-
-* RHEL8, RHEL9, SLES15 [fwget-1.0.4-1.noarch.rpm](https://downloads.linux.hpe.com/SDR/project/fwpp/fwget-1.0.4-1.noarch.rpm)
-
-* Debian, Ubuntu [fwget-1.0.4-1_all.deb](https://downloads.linux.hpe.com/SDR/project/fwpp/fwget-1.0.4-1_all.deb)	   
+[Download fwget](https://downloads.linux.hpe.com/SDR/project/fwpp-gen12/fwget-releases.html)
 
 # License
     fwget is open source software licensed under the GPLv2. We're interested in your feedback and pull requests.
     Check the HPE fwget github repository to contribute or clone the latest development branch.
 
 # Changelog
-
-    2025-03-10 (fwget-1.0.4): Add new feature - Automatically download the JSON file alongside the fwpkg package starting from Gen12 SPP.
-    
-    2025-03-03 (fwget-1.0.3): Add fwlist support to discover and export the local server firmware information.
-    
-    2024-02-12 (fwget-1.0.2): Update json index to include multiple targets per firmware.
+[Release Notes](https://downloads.linux.hpe.com/SDR/project/fwpp-gen12/fwget-releases.html#release-v1.0.5)
